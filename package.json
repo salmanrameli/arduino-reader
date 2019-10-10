@@ -1,17 +1,73 @@
 {
-  "name": "electron-arduino",
-  "version": "0.1.0",
+  "name": "ArduinoReader",
+  "version": "0.8.0",
   "private": true,
+  "main": "main.js",
+  "homepage": "./",
+  "author": {
+    "name": "Salman Rameli",
+    "email": "salmanrameli@gmail.com"
+  },
+  "build": {
+    "appId": "com.salmanrameli.arduino-reader",
+    "productName": "Arduino Reader",
+    "copyright": "Copyright © 2019 ${author}",
+    "asar": false,
+    "extends": null,
+    "files": [
+      "assets/*",
+      "build/**/*",
+      "node_modules/**/*",
+      "public/*",
+      "src/*",
+      "electron-wait-react.js",
+      "main.js",
+      "Procfile"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "mac": {
+      "icon": "assets/icon.icns",
+      "type": "distribution",
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.utilities"
+    },
+    "linux": {
+      "icon": "assets/icon.icns",
+      "executableName": "Arduino Reader",
+      "target": [
+        "deb",
+        "AppImage"
+      ],
+      "synopsis": "Electron based application to stream data from Arduino"
+    }
+  },
   "dependencies": {
+    "axios": "^0.19.0",
+    "cross-env": "^6.0.3",
+    "electron-is-dev": "^1.1.0",
+    "electron-store": "^5.0.0",
+    "jquery": "^3.4.1",
     "react": "^16.10.2",
+    "react-alert": "^5.5.0",
+    "react-alert-template-basic": "^1.0.0",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "react-transition-group": "^1.2.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "react-start": "react-scripts start",
+    "react-build": "react-scripts build",
+    "react-test": "react-scripts test --env=jsdom",
+    "react-eject": "react-scripts eject",
+    "electron-build": "electron-builder",
+    "release": "yarn react-build && electron-builder --publish=always",
+    "build": "yarn react-build && yarn electron-build",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -27,5 +83,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "electron": "^6.0.12",
+    "electron-builder": "^21.2.0",
+    "foreman": "^3.0.1",
+    "typescript": "^3.6.3",
+    "wait-on": "^3.3.0"
   }
 }
