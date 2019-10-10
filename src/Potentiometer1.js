@@ -214,14 +214,14 @@ class Potentiometer1 extends React.Component {
                 </div>
                 <div className="card-body">
                     {this.state.potentialNetworkIssues ? 
-                        <div class="alert alert-warning" role="alert">
+                        <div className="alert alert-warning" role="alert">
                             Warning! There might be some network issues that delayed responses from Arduino.
                         </div>
                         :
                         ''
                     }
                     {this.state.isDisconnected ? 
-                        <div class="alert alert-danger" role="alert">
+                        <div className="alert alert-danger" role="alert">
                             Device was disconnected due to problems either from the network or the device itself.
                         </div>
                         :
