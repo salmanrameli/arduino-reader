@@ -66,6 +66,7 @@ class Setting extends React.Component {
         this.setState({
             ipAddress: ipAddress,
             showSetting: false,
+            showSettingButton: true,
             settingButtonLabel: "Show Setting",
             buttonSettingClass: "btn-outline-dark",
         })
