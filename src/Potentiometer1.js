@@ -154,6 +154,10 @@ class Potentiometer1 extends React.Component {
         if(this.state.isReading) {
             this.stopStream()
         } else {
+            this.setState({
+                isDisconnected: false
+            })
+            
             this.startStream()
         }
     }
