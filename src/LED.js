@@ -10,31 +10,71 @@ class LED extends React.Component {
 
         this.state = {
             ipAddress: '',
+            stream: '',
             ledStatus: '',
             ledStatusButton: '',
             buttonLedClass: ''
         }
 
+        this.setLampStateIsOff = this.setLampStateIsOff.bind(this)
+        this.setLampStateIsOn = this.setLampStateIsOn.bind(this)
         this.initLampState = this.initLampState.bind(this)
+        this.streamData = this.streamData.bind(this)
         this.onLedButtonClicked = this.onLedButtonClicked.bind(this)
     }
 
     componentDidMount() {
+      this.initLampState()
+
       this.setState({
         ipAddress: `http://${store.get('ipAddress', '192.168.100.200')}`,
+        stream: setInterval(this.streamData, 10000),
+      })
+    }
+
+    setLampStateIsOff() {
+      this.setState({
         ledStatus: "OFF",
         ledStatusButton: "ON",
         buttonLedClass: "btn-outline-success"
       })
+    }
 
-      this.initLampState()
+    setLampStateIsOn() {
+      this.setState({
+        ledStatus: "ON",
+        ledStatusButton: "OFF",
+        buttonLedClass: "btn-danger"
+      })
     }
 
     initLampState() {
-      let url = `http://${store.get('ipAddress', '192.168.100.200')}/lamp_off`
+      let url = `http://${store.get('ipAddress', '192.168.100.200')}/lamp_state`
 
-      axios.get(url).then(function(_) {
-        
+      axios.get(url).then(response => {
+        let value = response.data.trim()
+
+        if(value === "ON") {
+          this.setLampStateIsOn()
+        } else if(value === "OFF") {
+          this.setLampStateIsOff()
+        }        
+      }).catch(function(error) {
+        console.log(error);
+      })
+    }
+
+    streamData() {
+      const url = `http://${store.get('ipAddress', '192.168.100.200')}/lamp_state`
+
+      axios.get(url, {timeout: 2000}).then(response => {
+        let value = response.data.trim()
+
+        if(value === "ON") {
+          this.setLampStateIsOn()
+        } else if(value === "OFF") {
+          this.setLampStateIsOff()
+        }
       }).catch(function(error) {
         console.log(error);
       })
@@ -44,30 +84,18 @@ class LED extends React.Component {
       if(this.state.ledStatus === "OFF" && this.state.ledStatusButton === "ON") {
         let url = `${this.state.ipAddress}/lamp_on`
   
-        axios.get(url).then(function(_) {
-          
+        axios.get(url).then(response => {
+          this.setLampStateIsOn()
         }).catch(function(error) {
           console.log(error);
-        })
-
-        this.setState({
-          ledStatus: "ON",
-          ledStatusButton: "OFF",
-          buttonLedClass: "btn-danger"
         })
       } else {
         let url = `${this.state.ipAddress}/lamp_off`
   
-        axios.get(url).then(function(_) {
-          
+        axios.get(url).then(response => {
+          this.setLampStateIsOff()
         }).catch(function(error) {
           console.log(error);
-        })
-
-        this.setState({
-          ledStatus: "OFF",
-          ledStatusButton: "ON",
-          buttonLedClass: "btn-outline-success"
         })
       }
     }
