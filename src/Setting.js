@@ -77,7 +77,7 @@ class Setting extends React.Component {
             <div>
                 <div className="pb-2 mt-4 mb-2 border-bottom">
                     <h1>
-                        Arduino + Electron
+                        Arduino Electron
                         {this.state.showSettingButton === true ? <button type="button" className={`btn ${this.state.buttonSettingClass} btn-sm float-right`} onClick={this.onShowSettingButtonClicked}>{this.state.settingButtonLabel}</button> : ''}
                     </h1>
                 </div>
