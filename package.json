@@ -1,6 +1,6 @@
 {
   "name": "ArduinoReader",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "main": "main.js",
   "homepage": "./",
@@ -11,7 +11,7 @@
   "build": {
     "appId": "com.salmanrameli.arduino-reader",
     "productName": "Arduino Reader",
-    "copyright": "Copyright © 2019 ${author}",
+    "copyright": "Copyright © 2020 ${author}",
     "asar": false,
     "extends": null,
     "files": [
@@ -56,6 +56,7 @@
     "react-alert": "^5.5.0",
     "react-alert-template-basic": "^1.0.0",
     "react-dom": "^16.10.2",
+    "react-google-charts": "^3.0.15",
     "react-scripts": "3.2.0",
     "react-transition-group": "^1.2.1"
   },

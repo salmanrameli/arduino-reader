@@ -1,5 +1,6 @@
 import React from 'react';
 import CanvasJSReact from '../src/lib/canvasjs.react';
+import { Chart } from "react-google-charts";
 
 const { ipcRenderer } = window.electronObject;
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -49,7 +50,7 @@ class Potentiometer1 extends React.Component {
             settingIsOpen: false,
             p1Interval: store.get('p1Interval', 1000),
             value: "Not Started",
-            ipAddress: store.get('ipAddress', '192.168.100.200'),
+            ipAddress: store.get('ipAddress', 'localhost:4000'),
             alertFlag: true,
             numberOfSuccessReplies: 0,
             numberOfErrors: 0,
@@ -238,6 +239,7 @@ class Potentiometer1 extends React.Component {
                     <small>Interval: {this.state.p1Interval}ms</small>
                     <br></br>
                     <br></br>
+                    <Chart width={200} height={200} chartType="Gauge" data={[['Label', 'Value'], ['P1', this.state.value]]} options={{max: 1024}}></Chart>
                     <CanvasJSChart options={options} onRef={ref => this.chart = ref} />
                     {this.state.settingIsOpen && this.state.isReading === false ? 
                         <form id="windowSizeSetting" onSubmit={this.onIntervalSettingSubmit}>

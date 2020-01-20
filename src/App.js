@@ -32,7 +32,7 @@ class App extends React.Component {
       :
       <div>
         <Setting />
-        <Servo0 />
+        {/* <Servo0 /> */}
         <LED />
         <Potentiometer0 />
         <Potentiometer1 />
